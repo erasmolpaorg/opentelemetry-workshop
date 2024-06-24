@@ -1,11 +1,3 @@
-####  OpenTelemetry traces configuration  ######################################
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
-from opentelemetry.trace import set_tracer_provider
-tracer_provider = TracerProvider()
-tracer_provider.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))
-set_tracer_provider(tracer_provider)
-
 ####  OpenTelemetry metrics configuration  #####################################
 from opentelemetry.metrics import get_meter_provider, set_meter_provider
 from opentelemetry.sdk.metrics import MeterProvider
