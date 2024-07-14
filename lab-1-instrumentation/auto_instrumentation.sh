@@ -1,4 +1,5 @@
-pip install opentelemetry-distro opentelemetry-exporter-otlp
+poetry install 
+
 opentelemetry-bootstrap -a install
 
 export OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
