@@ -4,11 +4,6 @@ COPY app.py .
 COPY requirements.txt .
 RUN pip install -r ./requirements.txt
 
-# OpenTelemetry configuration
-ARG OTEL_SERVICE_NAME
-ENV OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME:-python-flask}
-ENV OTEL_PYTHON_LOG_CORRELATION=true
-
 # Run app
 ENTRYPOINT [ "python3", "app.py" ]
-EXPOSE 4321
+EXPOSE 5000
