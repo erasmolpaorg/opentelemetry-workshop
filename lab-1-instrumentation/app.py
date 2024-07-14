@@ -1,9 +1,4 @@
 from flask import Flask
-app = Flask(__name__)
-
-# https://medium.com/insiderengineering/automatic-instrumentation-of-a-python-flask-application-using-opentelemetry-with-jaeger-be50f6530c23
-# https://github.com/open-telemetry/opentelemetry-python/blob/stable/docs/examples/auto-instrumentation/server_programmatic.py
-from flask import Flask
 
 app = Flask(__name__)
 
