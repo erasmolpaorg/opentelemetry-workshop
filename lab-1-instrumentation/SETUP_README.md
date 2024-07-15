@@ -31,6 +31,6 @@ Follow these steps to add OpenTelemetry to your Poetry-managed project.
     OTEL_TRACES_EXPORTER=console,otlp \
     OTEL_METRICS_EXPORTER=console \
     OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=0.0.0.0:4317 \
-    poetry run opentelemetry-instrument python myapp.py
+    poetry run opentelemetry-instrument python app.py
     ```
    
