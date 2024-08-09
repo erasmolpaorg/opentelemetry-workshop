@@ -1,9 +1,15 @@
-# Build app
-FROM python:3.10-slim
-COPY app.py .
-COPY requirements.txt .
-RUN pip install -r ./requirements.txt
+FROM python:3.12-slim
 
-# Run app
-ENTRYPOINT [ "python3", "app.py" ]
+WORKDIR /app
+
+RUN pip install --no-cache-dir poetry
+
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
+
+COPY . .
+
 EXPOSE 5000
+
+CMD ["poetry", "run", "python", "app.py"]

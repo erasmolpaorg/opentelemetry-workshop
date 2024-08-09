@@ -1,6 +1,3 @@
-
-# https://medium.com/insiderengineering/automatic-instrumentation-of-a-python-flask-application-using-opentelemetry-with-jaeger-be50f6530c23
-# https://github.com/open-telemetry/opentelemetry-python/blob/stable/docs/examples/auto-instrumentation/server_programmatic.py
 from flask import Flask
 from opentelemetry import trace
 from opentelemetry.exporter.jaeger.thrift import JaegerExporter
@@ -22,7 +19,7 @@ if __name__ == "__main__":
 
     # Configure Jaeger exporter
     jaeger_exporter = JaegerExporter(
-        agent_host_name='localhost',
+        agent_host_name='my-jaeger-agent',  # Nombre del servicio Jaeger en Kubernetes
         agent_port=6831,
     )
 
