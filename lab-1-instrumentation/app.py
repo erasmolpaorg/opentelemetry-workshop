@@ -1,16 +1,21 @@
 from flask import Flask
-from opentelemetry import trace
-from opentelemetry.exporter.jaeger.thrift import JaegerExporter
-from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry import trace, metrics
 from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.exporter.prometheus import PrometheusMetricsExporter
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from prometheus_client import start_http_server
+import time
 
 # Initialize Flask app
 app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "Hello, OpenTelemetry!"
+    return "Hello, OpenTelemetry with Prometheus!"
 
 if __name__ == "__main__":
     # Set up OpenTelemetry tracing
@@ -19,7 +24,7 @@ if __name__ == "__main__":
 
     # Configure Jaeger exporter
     jaeger_exporter = JaegerExporter(
-        agent_host_name='my-jaeger-agent',  # Nombre del servicio Jaeger en Kubernetes
+        agent_host_name='localhost',
         agent_port=6831,
     )
 
@@ -27,8 +32,19 @@ if __name__ == "__main__":
     span_processor = BatchSpanProcessor(jaeger_exporter)
     trace.get_tracer_provider().add_span_processor(span_processor)
 
-    # Instrument Flask app with OpenTelemetry
+    # Instrument Flask app with OpenTelemetry for tracing
     FlaskInstrumentor().instrument_app(app)
+
+    # Set up OpenTelemetry metrics
+    metrics.set_meter_provider(MeterProvider())
+
+    # Configure Prometheus exporter
+    prometheus_exporter = PrometheusMetricsExporter()
+    metric_reader = PeriodicExportingMetricReader(prometheus_exporter)
+    metrics.get_meter_provider().add_metric_reader(metric_reader)
+
+    # Start Prometheus HTTP server
+    start_http_server(8000)
 
     # Run the Flask app
     app.run(host="0.0.0.0", port=5000)
