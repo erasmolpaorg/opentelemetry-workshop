@@ -1,3 +1,5 @@
-docker build -t erasmolpa/flask-otel-instrumentation-demo:latest .
+docker build -t erasmolpa/opentelemetryworkshop:latest .
 
-#docker push erasmolpa/flask-otel-instrumentation-demo:latest
+docker scout quickview
+
+#docker push erasmolpa/opentelemetryworkshop:latest
